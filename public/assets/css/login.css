@@ -1,0 +1,169 @@
+/* General reset */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#navi {
+    font-size: 2rem;
+    font-weight: bold;
+    background-color: #1e3a8a;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.reminder {
+    color: white;
+    font-size: 1.5rem;
+}
+
+.a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.a:hover {
+    color: black;
+    text-decoration: none;
+}
+
+.back-button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #2563eb;
+    color: white;
+    border: 5px solid;
+    border-radius: 50px 0px 0px 50px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.back-button:hover {
+    background-color: #1d4ed8;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f9;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100vh;
+    margin: 0;
+}
+
+
+/* Centered Login Box */
+
+.container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-box {
+    background-color: #fff;
+    padding: 2rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+}
+
+h1 {
+    font-size: 1.8rem;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+    text-align: left;
+}
+
+label {
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 0.3rem;
+    display: block;
+}
+
+input {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 0.9rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+input:focus {
+    border-color: #1e3a8a;
+}
+
+.btn {
+    width: 100%;
+    padding: 0.8rem;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #1e3a8a;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #1e3a8a;
+}
+
+
+/* Footer */
+
+footer {
+    background-color: #1e3a8a;
+    color: #fff;
+    text-align: center;
+    padding: 1rem 0;
+    font-size: 0.9rem;
+}
+
+.hero-bg {
+    background-color: #1e3a8a;
+}
+
+.text-white {
+    color: white;
+}
+
+.image-highlight {
+    display: inline-block;
+    padding: 10px;
+    border: 5px solid yellow;
+    border-radius: 10px;
+    margin: 20px auto;
+    background-color: #fff;
+}
+
+.highlighted-image {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}

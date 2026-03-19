@@ -1,0 +1,11 @@
+ADMIN
+	superadmin
+	superadmin
+
+INSTRUCTOR
+	pepep
+	peps
+
+STUDENTS
+	mark	
+	mark

@@ -1,0 +1,394 @@
+// Assume a connection to the database has been established as $conn
+if (isset($_POST['submit']) && isset($_FILES['image'])) {
+    $user_id = $_SESSION['user_id']; // Get the logged-in user's ID
+    
+    
+    $image = $_FILES['image'];
+    $imageName = $image['name'];
+    $imageTmpName = $image['tmp_name'];
+    $imageSize = $image['size'];
+    $imageError = $image['error'];
+    $imageType = $image['type'];
+
+    $imageExt = strtolower(pathinfo($imageName, PATHINFO_EXTENSION));
+    $allowedExt = ['jpg', 'jpeg', 'png'];
+
+    // Check if the uploaded file is an allowed image type
+    if (in_array($imageExt, $allowedExt)) {
+        if ($imageError === 0) {
+            if ($imageSize < 5000000) { // Limit image size to 5MB
+                $imageNewName = "profile_".$user_id.".".$imageExt;
+                $imageDestination = "uploads/".$imageNewName;
+                
+                // Move the uploaded file to the 'uploads' directory
+                if (move_uploaded_file($imageTmpName, $imageDestination)) {
+                    // Update the user's profile image path in the database
+                    $query = "UPDATE users SET profile_image = ? WHERE id = ?";
+                    $stmt = $conn->prepare($query);
+                    $stmt->bind_param("si", $imageDestination, $user_id);
+                    $stmt->execute();
+                    
+                    // Redirect or notify the user
+                    header("Location: profile.php");
+                    exit();
+                } else {
+                    echo "Error uploading the file.";
+                }
+            } else {
+                echo "Your file is too large.";
+            }
+        } else {
+            echo "There was an error uploading the image.";
+        }
+    } else {
+        echo "Only JPG, JPEG, and PNG files are allowed.";
+    }
+}
+$conn = conn();
+  // fetch img in the db
+  $query = "SELECT profile_image FROM users WHERE id = ?";
+  $stmt = $conn->prepare($query);
+  $stmt->bind_param("i", $user_id); // Replace $user_id with the actual user ID
+  $stmt->execute();
+  $stmt->bind_result($image_path);
+  $stmt->fetch();
+
+  // temporary profile
+  $image_path = $image_path ? $image_path : 'C:\xampp\htdocs\grading-system\public\dashboard\extras\img1.jpg'; // Default image
+
+  // Check if file was uploaded
+if (isset($_FILES['profile_image']) && $_FILES['profile_image']['error'] == 0) {
+    $upload_dir = 'uploads/'; // Directory to store the uploaded files
+    $file_name = $_FILES['profile_image']['name'];
+    $file_tmp = $_FILES['profile_image']['tmp_name'];
+    $file_path = $upload_dir . basename($file_name);
+    
+    // Ensure the uploads directory exists
+    if (!file_exists($upload_dir)) {
+        mkdir($upload_dir, 0777, true); // Create the directory if it doesn't exist
+    }
+    
+    // Move the uploaded file to the uploads directory
+    if (move_uploaded_file($file_tmp, $file_path)) {
+        echo "File uploaded successfully!";
+    } else {
+        echo "Error uploading the file.";
+    }
+} else {
+    echo "No file uploaded or there was an error.";
+}
+$conn->close();
+         <!-- #region -->
+          
+          
+         
+          
+           <section id="inputRecords" class="content-section hidden">
+            <h2 class="text-3xl font-bold mb-4">Input Records</h2>
+            <form action="../../controllers/recordController.php" method="post">
+                <!-- Subject Selection -->
+                <div class="mb-4">
+                    <label for="subject_id" class="block text-lg font-semibold mb-2">Select Subject:</label>
+                    <select id="subject_id" name="subject_id" class="w-full border border-gray-300 p-2 rounded mb-4" required>
+                        <?php 
+                        $conn = conn();
+                        if (isset($conn) && isset($user_id)) {
+                            $query = "SELECT s.id, s.subject_name FROM assigned_subjects AS asub 
+                                    JOIN subjects AS s ON asub.subject_id = s.id 
+                                    WHERE asub.instructor_id = ?";
+                            $stmt = $conn->prepare($query);
+                            if ($stmt) {
+                                $stmt->bind_param("i", $user_id);
+                                $stmt->execute();
+                                $result = $stmt->get_result();
+                                if ($result->num_rows > 0) {
+                                    while ($row = $result->fetch_assoc()) {
+                                        echo '<option value="' . htmlspecialchars($row['id']) . '">' . htmlspecialchars($row['subject_name']) . '</option>';
+                                    }
+                                } else {
+                                    echo '<option value="">No subjects available for this instructor</option>';
+                                }
+                                $stmt->close();
+                            } else {
+                                echo '<option value="">Error preparing statement</option>';
+                            }
+                        } else {
+                            echo '<option value="">Database connection or User ID not established</option>';
+                        }
+                        ?>
+                    </select>
+                </div>
+
+                <!-- Record Type Selection -->
+                <div class="mb-4">
+                    <label for="record_type" class="block text-lg font-semibold mb-2">Select Record Type:</label>
+                    <select id="record_type" name="record_type" class="w-full border border-gray-300 p-2 rounded mb-4" required>
+                        <option value="quiz">Quiz</option>
+                        <option value="activity">Activity</option>
+                        <option value="class_schedule">Class Schedule</option>
+                        <option value="exam">Exam</option>
+                    </select>
+                </div>
+
+                <!-- Quiz Fields -->
+                <div id="quiz_fields" class="hidden">
+                    <label for="quiz_name" class="block text-lg font-semibold mb-2">Quiz Name:</label>
+                    <input type="text" id="quiz_name" name="quiz_name" class="w-full border border-gray-300 p-2 rounded mb-4">
+                    <label for="quiz_date" class="block text-lg font-semibold mb-2">Quiz Date:</label>
+                    <input type="date" id="quiz_date" name="quiz_date" class="w-full border border-gray-300 p-2 rounded mb-4">
+                    <label for="quiz_score" class="block text-lg font-semibold mb-2">Quiz Total Score:</label>
+                    <input type="number" id="quiz_score" name="quiz_score" class="w-full border border-gray-300 p-2 rounded mb-4">
+                </div>
+
+                <!-- Activity Fields -->
+                <div id="activity_fields" class="hidden">
+                    <label for="activity_name" class="block text-lg font-semibold mb-2">Activity Name:</label>
+                    <input type="text" id="activity_name" name="activity_name" class="w-full border border-gray-300 p-2 rounded mb-4">
+                    <label for="activity_score" class="block text-lg font-semibold mb-2">Activity Total Score:</label>
+                    <input type="number" id="activity_score" name="activity_score" class="w-full border border-gray-300 p-2 rounded mb-4">
+                </div>
+
+
+
+                <!-- Class Schedule Fields -->
+                <div id="class_schedule_fields" class="hidden">
+                    <label for="schedule_date" class="block text-lg font-semibold mb-2">Schedule Date:</label>
+                    <input type="date" id="schedule_date" name="schedule_date" class="w-full border border-gray-300 p-2 rounded mb-4">
+                    <label for="time_start" class="block text-lg font-semibold mb-2">Start Time:</label>
+                    <input type="time" id="time_start" name="time_start" class="w-full border border-gray-300 p-2 rounded mb-4">
+                    <label for="time_end" class="block text-lg font-semibold mb-2">End Time:</label>
+                    <input type="time" id="time_end" name="time_end" class="w-full border border-gray-300 p-2 rounded mb-4">
+                </div>
+
+                        <!-- Exam Fields -->
+                <div id="exam_fields" class="hidden">
+                    <label for="exam_name" class="block text-lg font-semibold mb-2">Exam Name:</label>
+                    <input type="text" id="exam_name" name="exam_name" class="w-full border border-gray-300 p-2 rounded mb-4">
+                    <label for="exam_date" class="block text-lg font-semibold mb-2">Exam Date:</label>
+                    <input type="date" id="exam_date" name="exam_date" class="w-full border border-gray-300 p-2 rounded mb-4">
+                    <label for="exam_score" class="block text-lg font-semibold mb-2">Exam Total Score:</label>
+                    <input type="number" id="exam_score" name="exam_score" class="w-full border border-gray-300 p-2 rounded mb-4">
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="bg-blue-700 text-white px-4 py-2 rounded">Submit Record</button>
+            </form>
+            <br><br>
+            <?php
+            // Database connection
+            $conn = conn();
+            if (isset($conn) && isset($user_id)) {
+                // Fetch subjects assigned to the instructor
+                $query = "SELECT s.id, s.subject_name FROM assigned_subjects AS asub
+                        JOIN subjects AS s ON asub.subject_id = s.id
+                        WHERE asub.instructor_id = ?";
+                $stmt = $conn->prepare($query);
+                if ($stmt) {
+                    $stmt->bind_param("i", $user_id);
+                    $stmt->execute();
+                    $subjects_result = $stmt->get_result();
+
+                    // Check if subjects are available
+                    if ($subjects_result->num_rows > 0) {
+                        $subject_ids = [];
+                        while ($row = $subjects_result->fetch_assoc()) {
+                            $subject_ids[] = $row['id']; // Store the subject ids
+                        }
+
+                        // Fetch records for each subject (Quiz, Activity, Class Schedule, Exam)
+                        $subject_placeholders = implode(',', array_fill(0, count($subject_ids), '?'));
+                        
+                        // Queries for quizzes, activities, class schedule, and exams
+                        $queries = [
+                            'quiz' => "SELECT q.quiz_name, q.date, q.total_score, s.subject_name FROM quizzes AS q
+                                    JOIN subjects AS s ON q.subject_id = s.id
+                                    WHERE q.subject_id IN ($subject_placeholders)",
+                            'activity' => "SELECT a.activity_name, a.total_score, s.subject_name FROM activities AS a
+                                        JOIN subjects AS s ON a.subject_id = s.id
+                                        WHERE a.subject_id IN ($subject_placeholders)",
+                            'class_schedule' => "SELECT cs.schedule_date, cs.time_start, cs.time_end, s.subject_name FROM class_schedule AS cs
+                                                JOIN subjects AS s ON cs.subject_id = s.id
+                                                WHERE cs.subject_id IN ($subject_placeholders)",
+                            'exam' => "SELECT e.exam_name, e.date, e.total_score, s.subject_name FROM exams AS e
+                                    JOIN subjects AS s ON e.subject_id = s.id
+                                    WHERE e.subject_id IN ($subject_placeholders)"
+                        ];
+
+                        // Prepare and execute queries for each type
+                        foreach ($queries as $type => $query) {
+                            $stmt = $conn->prepare($query);
+                            $stmt->bind_param(str_repeat('i', count($subject_ids)), ...$subject_ids);
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+
+                            // Display the records based on the type (Quiz, Activity, Class Schedule, Exam)
+                            echo "<div class='border-2 border-gray-400 p-4 mb-6'>";
+                            echo "<h3 class='text-2xl font-bold mb-4'>" . ucfirst(str_replace('_', ' ', $type)) . " Records</h3>";
+                            if ($result->num_rows > 0) {
+                                echo "<table class='table-auto w-full border-collapse'>";
+                                echo "<thead><tr><th class='border px-4 py-2'>Subject</th><th class='border px-4 py-2'>Details</th></tr></thead><tbody>";
+                                while ($row = $result->fetch_assoc()) {
+                                    echo "<tr><td class='border px-4 py-2'>" . htmlspecialchars($row['subject_name']) . "</td>";
+                                    if ($type == 'quiz' || $type == 'exam') {
+                                        echo "<td class='border px-4 py-2'>" . htmlspecialchars($row['quiz_name'] ?? $row['exam_name']) . " - " . htmlspecialchars($row['date']) . " (Total Score: " . htmlspecialchars($row['total_score']) . ")</td></tr>";
+                                    } elseif ($type == 'activity') {
+                                        echo "<td class='border px-4 py-2'>" . htmlspecialchars($row['activity_name']) . " (Total Score: " . htmlspecialchars($row['total_score']) . ")</td></tr>";
+                                    } elseif ($type == 'class_schedule') {
+                                        echo "<td class='border px-4 py-2'>" . htmlspecialchars($row['schedule_date']) . " (" . htmlspecialchars($row['time_start']) . " - " . htmlspecialchars($row['time_end']) . ")</td></tr>";
+                                    }
+                                }
+                                echo "</tbody></table>";
+                            } else {
+                                echo "<p>No records found for this instructor.</p>";
+                            }
+                            $stmt->close();
+                            echo "</div>"; // Closing the container for each type
+                        }
+                    } else {
+                        echo "<p>No subjects assigned to this instructor.</p>";
+                    }
+                } else {
+                    echo "<p>Error preparing statement for fetching subjects.</p>";
+                }
+            } else {
+                echo "<p>Database connection or user ID not established.</p>";
+            }
+            ?>
+        </section>
+          
+          
+          
+        <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Super Admin Registration</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Error Message Styling */
+        .error-message {
+            color: red;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="navi">
+        <span class="reminder">Super Admin Registration</span>
+        <a href="#" class="a back-button">Back</a>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <div class="login-box">
+            <h1>Super Admin Registration</h1>
+            <form id="registrationForm" method="POST" action="">
+                <!-- Registration Code -->
+                <div class="form-group">
+                    <label for="code">Registration Code:</label>
+                    <input type="text" id="code" name="code" required>
+                    <div id="code-error" class="error-message hidden">Code is required.</div>
+                </div>
+
+                <!-- Username -->
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required>
+                    <div id="username-error" class="error-message hidden">Username is required.</div>
+                </div>
+
+                <!-- Password -->
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                    <div id="password-error" class="error-message hidden">Password is required.</div>
+                </div>
+
+                <!-- Full Name -->
+                <div class="form-group">
+                    <label for="full_name">Full Name:</label>
+                    <input type="text" id="full_name" name="full_name" required>
+                    <div id="full_name-error" class="error-message hidden">Full Name is required.</div>
+                </div>
+
+                <!-- Email -->
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                    <div id="email-error" class="error-message hidden">Valid email is required.</div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn">Register</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2024 Super Admin Portal</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        document.getElementById("registrationForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent page reload
+
+            let hasError = false;
+
+            // Get input values
+            const code = document.getElementById("code");
+            const username = document.getElementById("username");
+            const password = document.getElementById("password");
+            const fullName = document.getElementById("full_name");
+            const email = document.getElementById("email");
+
+            // Error message containers
+            const codeError = document.getElementById("code-error");
+            const usernameError = document.getElementById("username-error");
+            const passwordError = document.getElementById("password-error");
+            const fullNameError = document.getElementById("full_name-error");
+            const emailError = document.getElementById("email-error");
+
+            // Reset error messages
+            document.querySelectorAll(".error-message").forEach(e => e.classList.add("hidden"));
+
+            // Check fields
+            if (!code.value.trim()) {
+                codeError.classList.remove("hidden");
+                hasError = true;
+            }
+
+            if (!username.value.trim()) {
+                usernameError.classList.remove("hidden");
+                hasError = true;
+            }
+
+            if (!password.value.trim()) {
+                passwordError.classList.remove("hidden");
+                hasError = true;
+            }
+
+            if (!fullName.value.trim()) {
+                fullNameError.classList.remove("hidden");
+                hasError = true;
+            }
+
+            if (!email.value.trim() || !email.value.includes("@")) {
+                emailError.classList.remove("hidden");
+                hasError = true;
+            }
+
+            // Submit the form only if there are no errors
+            if (!hasError) {
+                alert("Registration successful!"); // Placeholder for success
+            }
+        });
+    </script>
+</body>
+</html>

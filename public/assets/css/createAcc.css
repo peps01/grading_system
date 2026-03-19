@@ -1,0 +1,80 @@
+/* This will style the buttons container to make them aligned */
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px;
+}
+
+.back-button,
+.register-button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    /* Green color for buttons */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.back-button:hover,
+.register-button:hover {
+    background-color: #45a049;
+    /* Darker green for hover effect */
+}
+
+.register-button {
+    background-color: #008CBA;
+    /* Blue color for Register button */
+}
+
+.register-button:hover {
+    background-color: #007bb5;
+    /* Darker blue for hover effect */
+}
+
+
+/* Basic styling for the rest of the page */
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-box {
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    background-color: white;
+}
+
+form .form-group {
+    margin-bottom: 20px;
+}
+
+form .form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+form .form-group input,
+form .form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+form .form-group input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+}
+
+form .form-group input[type="submit"]:hover {
+    background-color: #45a049;
+}

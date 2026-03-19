@@ -1,0 +1,85 @@
+body {
+    font-family: Arial, sans-serif;
+    /* Set a clean font */
+    background-color: #f0f0f0;
+    /* Light background for the body */
+}
+
+.content-section {
+    max-width: 1000px;
+    /* Limit the width of the section */
+    margin: 20px auto;
+    /* Center the section */
+    padding: 20px;
+    /* Add padding */
+    background-color: #ffffff;
+    /* White background for the section */
+    border-radius: 8px;
+    /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow */
+}
+
+h2,
+h3 {
+    color: #333;
+    /* Darker text color for headings */
+}
+
+label {
+    font-weight: bold;
+    /* Bold labels */
+}
+
+input[type="text"],
+input[type="email"],
+input[type="date"],
+textarea {
+    width: 100%;
+    /* Full width inputs */
+    padding: 10px;
+    /* Padding inside inputs */
+    border: 1px solid #ccc;
+    /* Border for inputs */
+    border-radius: 4px;
+    /* Rounded corners for inputs */
+    box-sizing: border-box;
+    /* Include padding in width */
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="date"]:focus,
+textarea:focus {
+    border-color: #007BFF;
+    /* Change border color on focus */
+    outline: none;
+    /* Remove default outline */
+}
+
+button {
+    background-color: #007BFF;
+    /* Button background color */
+    color: white;
+    /* Button text color */
+    padding: 10px 15px;
+    /* Button padding */
+    border: none;
+    /* Remove border */
+    border-radius: 4px;
+    /* Rounded corners for button */
+    cursor: pointer;
+    /* Pointer cursor on hover */
+}
+
+button:hover {
+    background-color: #0056b3;
+    /* Darker blue on hover */
+}
+
+ul {
+    list-style-type: disc;
+    /* Bullet points for list */
+    padding-left: 20px;
+    /* Indent list */
+}

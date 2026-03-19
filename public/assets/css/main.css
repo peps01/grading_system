@@ -1,0 +1,128 @@
+/* General Styles */
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f7fafc;
+    /* Tailwind's bg-gray-100 */
+    color: #000;
+    /* Tailwind's text-black */
+}
+
+
+/* Navbar Styles */
+
+nav {
+    background-color: #1e3a8a;
+    /* Tailwind's bg-blue-900 */
+    color: white;
+    padding: 1rem;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+}
+
+nav a:hover {
+    color: black;
+}
+
+
+/* Hero Section Styles */
+
+.hero-bg {
+    background-image: url('OIP.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 5rem 0;
+    /* Tailwind's py-20 */
+    text-align: center;
+}
+
+#ps {
+    color: grey;
+}
+
+.hero-bg h1 {
+    font-size: 3rem;
+    /* Tailwind's text-5xl */
+    font-weight: bold;
+    margin-bottom: 1rem;
+    /* Tailwind's mb-4 */
+}
+
+.hero-bg p {
+    font-size: 1.25rem;
+    /* Tailwind's text-xl */
+    margin-bottom: 2rem;
+    /* Tailwind's mb-8 */
+}
+
+
+/* Features Section Styles */
+
+.features-section {
+    padding: 5rem 0;
+    /* Tailwind's py-20 */
+    text-align: center;
+}
+
+.features-section h2 {
+    font-size: 2.5rem;
+    /* Tailwind's text-4xl */
+    font-weight: bold;
+    margin-bottom: 2.5rem;
+    /* Tailwind's mb-10 */
+}
+
+.features-section .feature {
+    background-color: white;
+    padding: 1.5rem;
+    /* Tailwind's p-6 */
+    border-radius: 0.5rem;
+    /* Tailwind's rounded-lg */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* Tailwind's shadow-lg */
+}
+
+
+/* Testimonials Section Styles */
+
+.testimonials-section {
+    background-color: #edf2f7;
+    /* Tailwind's bg-gray-200 */
+    padding: 5rem 0;
+    /* Tailwind's py-20 */
+    text-align: center;
+}
+
+.testimonials-section h2 {
+    font-size: 2.5rem;
+    /* Tailwind's text-4xl */
+    font-weight: bold;
+    margin-bottom: 2.5rem;
+    /* Tailwind's mb-10 */
+}
+
+.testimonials-section .testimonial {
+    background-color: white;
+    padding: 1.5rem;
+    /* Tailwind's p-6 */
+    border-radius: 0.5rem;
+    /* Tailwind's rounded-lg */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* Tailwind's shadow-lg */
+}
+
+
+/* Footer Styles */
+
+footer {
+    background-color: #1e3a8a;
+    /* Tailwind's bg-blue-900 */
+    color: white;
+    padding: 1.5rem;
+    /* Tailwind's py-6 */
+    text-align: center;
+}

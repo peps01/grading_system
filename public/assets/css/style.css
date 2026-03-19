@@ -1,0 +1,264 @@
+/* Body and Font */
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f3f4f6;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+
+/* Navbar */
+
+.navbar {
+    background-color: #1e3a8a;
+    color: white;
+    padding: 1rem;
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar-logo {
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+    text-decoration: none;
+    padding-left: 20px;
+}
+
+.navbar-button {
+    padding: 0.5rem 1rem;
+    background-color: #2563eb;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 0.375rem;
+    transition: background-color 0.3s ease;
+}
+
+.navbar-button:hover {
+    color: black;
+    background-color: #1e40af;
+}
+
+
+/* Hero Section */
+
+.hero-bg {
+    background-image: url('../public/img/aclc.png');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 5rem 2rem;
+    text-align: center;
+}
+
+.hero-title {
+    font-size: 4rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.hero-description {
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+}
+
+.hero-button {
+    padding: 1rem 2rem;
+    background-color: #2563eb;
+    color: white;
+    text-decoration: none;
+    border-radius: 0.375rem;
+    transition: background-color 0.3s ease;
+}
+
+.hero-button:hover {
+    background-color: #1e40af;
+}
+
+
+/* Features Section */
+
+.features {
+    padding: 4rem 2rem;
+}
+
+.features-title {
+    font-size: 3rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.features-container {
+    text-align: center;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2rem;
+}
+
+.feature-card {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 0.375rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.feature-icon {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 1rem;
+}
+
+.feature-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.feature-description {
+    font-size: 1rem;
+}
+
+
+/* Testimonials Section */
+
+.testimonials {
+    background-color: #f3f4f6;
+    padding: 4rem 2rem;
+}
+
+.testimonials-title {
+    font-size: 3rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.testimonials-flex {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.testimonial-card {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 0.375rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+}
+
+.testimonial-quote {
+    font-size: 1.25rem;
+    font-style: italic;
+}
+
+.testimonial-author {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-top: 1rem;
+}
+
+
+/* Load Grades Section */
+
+.load-grades {
+    padding: 4rem 2rem;
+}
+
+.load-grades-container {
+    text-align: center;
+}
+
+.load-grades-title {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+}
+
+.load-grades-button {
+    padding: 1rem 2rem;
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 0.375rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.load-grades-button:hover {
+    background-color: #1e40af;
+}
+
+.grades-container {
+    margin-top: 2rem;
+    font-size: 1.25rem;
+}
+
+
+/* Modal */
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 0.375rem;
+    width: 400px;
+    text-align: center;
+}
+
+.modal-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.modal-description {
+    margin-top: 1rem;
+}
+
+.close-modal {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #ff0000;
+    color: white;
+    border: none;
+    border-radius: 0.375rem;
+    cursor: pointer;
+}
+
+.close-modal:hover {
+    background-color: #e60000;
+}
+
+
+/* Footer */
+
+.footer {
+    background-color: #1e3a8a;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+}
